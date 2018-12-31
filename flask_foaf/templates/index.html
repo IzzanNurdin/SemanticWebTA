@@ -11,7 +11,7 @@
     		<h1 style="text-align: center;">Simple Movie Database</h1>
     	</div> 
     	<div class="col-md-12" style="margin-top: 20px;">
-    		<div class="col-md-6">
+    		<div class="col-md-6" style="margin: 0 auto">
 	    		<div class="input-group">
 	    			<input class="form-control" placeholder="Input Movie Name" type="text">
 	    			<div class="input-group-append">
@@ -19,6 +19,9 @@
 	    			</div>
 	    		</div>
 	    	</div>
+    	</div>
+    	<div class="col-md-6" style="margin: 20px auto">
+    		{{table | safe}}
     	</div>   
     </body>
 </html>

@@ -7,10 +7,10 @@ from SPARQLWrapper import SPARQLWrapper
 
 app = Flask(__name__)
 
-wd = Namespace("http://www.wikidata.org/entity/")
-wdt = Namespace("http://www.wikidata.org/prop/direct/")
-wikibase = Namespace("http://wikiba.se/ontology#")
-bd = Namespace("http://www.bigdata.com/rdf#")
+# wd = Namespace("http://www.wikidata.org/entity/")
+# wdt = Namespace("http://www.wikidata.org/prop/direct/")
+# wikibase = Namespace("http://wikiba.se/ontology#")
+# bd = Namespace("http://www.bigdata.com/rdf#")
 
 # foaf = Graph()
 # foaf.parse("flask_foaf/static/rdf/sparql.rdf")
@@ -30,7 +30,7 @@ class Item(object):
 			self.wiki = wiki
 			self.title = title
 
-def get_me():
+def get_table():
  
 	wdt = Namespace("https://www.wikidata.org/wiki/Property:")
 	rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
@@ -66,7 +66,7 @@ def get_me():
 		sLink = "<a href=" + s + ">"  + o + "</a>"
 		listJudul.append(Item(sLink, str(o)))
 
-	table=ItemTable(listJudul, border = '1px solid black')
+	table=ItemTable(listJudul)
 
 	if listJudul == []:
 		return "No Result"
@@ -83,5 +83,5 @@ def get_me():
 @app.route("/")
 def home_page():
     return render_template("index.html",
-                           me= get_me()
+                          table=get_table()
                            )
