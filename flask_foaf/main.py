@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 from rdflib import Graph, Namespace
 from flask_table import Table, Col
 from rdflib.namespace import FOAF, RDF
-from SPARQLWrapper import SPARQLWrapper
+from SPARQLWrapper import SPARQLWrapper, JSON
 
 
 app = Flask(__name__)
@@ -82,6 +82,9 @@ def get_table():
 
 @app.route("/")
 def home_page():
-    return render_template("index.html",
-                          table=get_table()
-                           )
+    return render_template("index.html")
+
+@app.route("/search", methods=['GET'])
+def search_page():
+	#search=request.form['search']
+	return render_template("search.html", table=get_table())
