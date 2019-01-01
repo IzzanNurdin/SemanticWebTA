@@ -20,7 +20,7 @@ class Item(object):
 			self.wiki = wiki
 			self.title = title
 
-def get_table():
+def get_table(search):
  
 	wdt = Namespace("https://www.wikidata.org/wiki/Property:")
 	rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
@@ -52,8 +52,11 @@ def get_table():
 	for s,p,o in g.triples( (None, rdfs.label, None) ):
 		# for x,y,z in g.triples( (s, wdt.P577, None) ):
 		# 	print (s + " published in " + z)
-		sLink = "<a href=" + s + ">"  + o + "</a>"
-		listJudul.append(Item(sLink, str(o)))
+		tmpO=str(o).lower()
+		tmpSearch=search.lower()
+		if tmpO.__contains__(tmpSearch):
+			sLink = "<a href=" + s + ">"  + o + "</a>"
+			listJudul.append(Item(sLink, str(o)))
 
 	table=ItemTable(listJudul)
 
@@ -78,4 +81,4 @@ def search_page():
 	search=request.args['search']
 	r=requests.get('http://www.omdbapi.com/?apikey=d035fd57' + '&s=' + str(search))
 	json=r.json() 
-	return render_template("search.html", table=get_table(), search=str(search), json=json)
+	return render_template("search.html", table=get_table(str(search)), search=str(search), json=json)
