@@ -3,21 +3,11 @@ from rdflib import Graph, Namespace
 from flask_table import Table, Col
 from rdflib.namespace import FOAF, RDF
 from SPARQLWrapper import SPARQLWrapper, JSON
+import requests
 
 
 app = Flask(__name__)
 
-# wd = Namespace("http://www.wikidata.org/entity/")
-# wdt = Namespace("http://www.wikidata.org/prop/direct/")
-# wikibase = Namespace("http://wikiba.se/ontology#")
-# bd = Namespace("http://www.bigdata.com/rdf#")
-
-# foaf = Graph()
-# foaf.parse("flask_foaf/static/rdf/sparql.rdf")
-# foaf.bind('wd', wd)
-# foaf.bind('wdt', wdt)
-# foaf.bind('wikibase', wikibase)
-# foaf.bind('bd', bd)
 
 class ItemTable(Table):
 		classes = ["table", "table-hover"]
@@ -86,4 +76,6 @@ def home_page():
 @app.route("/search", methods=['GET'])
 def search_page():
 	search=request.args['search']
-	return render_template("search.html", table=get_table(), search=str(search))
+	r=requests.get('http://www.omdbapi.com/?apikey=d035fd57' + '&s=' + str(search))
+	json=r.json() 
+	return render_template("search.html", table=get_table(), search=str(search), json=json)
