@@ -60,9 +60,8 @@ def get_table():
 	table=""
 
 	for s,p,o in g.triples( (None, rdfs.label, None) ):
-		#for x,y,z in g.triples( (s, wdt.P577, None) ):
-		#	print (s + " published in " + z)
-		print (o)
+		# for x,y,z in g.triples( (s, wdt.P577, None) ):
+		# 	print (s + " published in " + z)
 		sLink = "<a href=" + s + ">"  + o + "</a>"
 		listJudul.append(Item(sLink, str(o)))
 
@@ -86,5 +85,5 @@ def home_page():
 
 @app.route("/search", methods=['GET'])
 def search_page():
-	#search=request.form['search']
-	return render_template("search.html", table=get_table())
+	search=request.args['search']
+	return render_template("search.html", table=get_table(), search=str(search))
